@@ -26,9 +26,9 @@ class DetailViewController: UIViewController {
             if let webView = self.itemWebView
             {
                 
-                if let templateURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("template", ofType: "html")!)?
+                if let templateURL = URL(fileURLWithPath: Bundle.main.path(forResource: "template", ofType: "html")!)
                 {
-                    if var template = NSString(contentsOfURL: templateURL, encoding: NSUTF8StringEncoding, error: nil)?
+                    if var template = NSString(contentsOfURL: templateURL, encoding: String.Encoding.utf8, error: nil)?
                     {
                         if let title = item.title?
                         {
@@ -46,7 +46,7 @@ class DetailViewController: UIViewController {
                         
                         if let date = item.pubDate?
                         {
-                            var formatter = NSDateFormatter()
+                            var formatter = DateFormatter()
                             formatter.dateFormat = "MMM dd, yyyy"
                             
                             template = template.stringByReplacingOccurrencesOfString("###DATE###", withString: formatter.stringFromDate(date))

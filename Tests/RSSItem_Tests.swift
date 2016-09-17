@@ -11,7 +11,7 @@ import XCTest
 
 class RSSItem_Tests: XCTestCase {
     
-    let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 
     override func setUp() {
         super.setUp()
@@ -44,7 +44,7 @@ class RSSItem_Tests: XCTestCase {
         item.title = "Hello"
         item.setLink("http://www.apple.com")
         item.guid = "1234"
-        item.pubDate = NSDate()
+        item.pubDate = Date()
         item.itemDescription = "Big Description"
         item.content = "Here is the content"
         item.setCommentsLink("http://www.test.com")
@@ -53,11 +53,11 @@ class RSSItem_Tests: XCTestCase {
         item.author = "John Doe"
         item.categories = ["One","Two","Tree"]
         
-        let archive = documentsPath.stringByAppendingString("test.archive")
+        let archive = documentsPath + "test.archive"
         
         NSKeyedArchiver.archiveRootObject(item, toFile: archive)
         
-        var item2 = NSKeyedUnarchiver.unarchiveObjectWithFile(archive) as RSSItem
+        var item2 = NSKeyedUnarchiver.unarchiveObject(withFile: archive) as! RSSItem
         
         XCTAssert(item.title == item2.title, "")
         XCTAssert(item.link == item2.link, "")

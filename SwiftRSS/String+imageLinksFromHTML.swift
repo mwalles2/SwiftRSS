@@ -9,9 +9,9 @@
 import UIKit
 
 extension String {
-    var imageLinksFromHTMLString: [NSURL]
+    var imageLinksFromHTMLString: [URL]
     {
-        var matches = [NSURL]()
+        var matches = [URL]()
         
         var error: NSError?
         
@@ -19,7 +19,7 @@ extension String {
         
         if let regex = NSRegularExpression(pattern:"(https?)\\S*(png|jpg|jpeg|gif)", options:.CaseInsensitive, error:&error)
         {
-            regex.enumerateMatchesInString(self, options: NSMatchingOptions(0), range: full_range) {
+            regex.enumerateMatchesInString(self, options: NSRegularExpression.MatchingOptions(0), range: full_range) {
                 (result : NSTextCheckingResult!, _, _) in
                 
                 // didn't find a way to bridge an NSRange to Range<String.Index>

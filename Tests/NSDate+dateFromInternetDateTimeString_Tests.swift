@@ -11,9 +11,9 @@ import XCTest
 
 class NSDateExtension_Tests: XCTestCase {
     
-    let GMT_timeZone: NSTimeZone! = NSTimeZone(forSecondsFromGMT: 0)
-    let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSGregorianCalendar)
-    let calendar_flags = NSCalendarUnit(UInt.max)
+    let GMT_timeZone: TimeZone! = TimeZone(secondsFromGMT: 0)
+    var calendar: Calendar! = Calendar(identifier: NSGregorianCalendar)
+    let calendar_flags = NSCalendar.Unit(UInt.max)
 
     override func setUp() {
         super.setUp()
@@ -30,7 +30,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "Sun, 19 May 2002 15:21:36 GMT"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -53,7 +53,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "Sun, 19 May 2002 15:21 GMT"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -76,7 +76,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "Sun, 19 May 2002 15:21:36"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -98,7 +98,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "Sun, 19 May 2002 15:21"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -120,7 +120,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "19 May 2002 15:21:36 GMT"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -142,7 +142,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "19 May 2002 15:21 GMT"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -164,7 +164,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "19 May 2002 15:21:36"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -185,7 +185,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "19 May 2002 15:21"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -207,10 +207,10 @@ class NSDateExtension_Tests: XCTestCase {
     func test_dateFormatter_withDateStringRFC3339Format1_shouldReturnValidDate() {
         
         let dateString = "1996-12-19T16:39:57-0800"
-        let timeZone = NSTimeZone(forSecondsFromGMT: -60*60*8)
-        calendar.timeZone = timeZone
+        let timeZone = TimeZone(secondsFromGMT: -60*60*8)
+        calendar.timeZone = timeZone!
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             
@@ -231,10 +231,10 @@ class NSDateExtension_Tests: XCTestCase {
     func test_dateFormatter_withDateStringRFC3339Format2_shouldReturnValidDate() {
         
         let dateString = "1937-01-01T12:00:27.87+0020"
-        let timeZone = NSTimeZone(forSecondsFromGMT: 60*60*2)
-        calendar.timeZone = timeZone
+        let timeZone = TimeZone(secondsFromGMT: 60*60*2)
+        calendar.timeZone = timeZone!
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
@@ -257,7 +257,7 @@ class NSDateExtension_Tests: XCTestCase {
         
         let dateString = "1937-01-01T12:00:27"
         
-        if let date: NSDate = NSDate.dateFromInternetDateTimeString(dateString)?
+        if let date: Date = Date.dateFromInternetDateTimeString(dateString)?
         {
             var dateComponent = calendar.components(calendar_flags, fromDate: date)
             

@@ -11,7 +11,7 @@ import XCTest
 
 class RSSFeed_Tests: XCTestCase {
     
-    let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+    let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 
     override func setUp() {
         super.setUp()
@@ -45,7 +45,7 @@ class RSSFeed_Tests: XCTestCase {
         feed.setLink("http://www.swift.io")
         feed.feedDescription = "Description of the feed"
         feed.language = "fr"
-        feed.lastBuildDate = NSDate()
+        feed.lastBuildDate = Date()
         feed.generator = "My Generator"
         feed.copyright = "Copyright Acme corp"
         
@@ -54,7 +54,7 @@ class RSSFeed_Tests: XCTestCase {
         item.title = "Hello"
         item.setLink("http://www.apple.com")
         item.guid = "1234"
-        item.pubDate = NSDate()
+        item.pubDate = Date()
         item.itemDescription = "Big Description"
         item.content = "Here is the content"
         item.setCommentsLink("http://www.test.com")
@@ -70,7 +70,7 @@ class RSSFeed_Tests: XCTestCase {
         item2.title = "Hello2"
         item2.setLink("http://www.google.com")
         item2.guid = "5678"
-        item2.pubDate = NSDate()
+        item2.pubDate = Date()
         item2.itemDescription = "Big Description Again"
         item2.content = "Here is the content for the second item"
         item2.setCommentsLink("http://www.testing.com")
@@ -81,11 +81,11 @@ class RSSFeed_Tests: XCTestCase {
         
         feed.items.append(item2)
         
-        let archive = documentsPath.stringByAppendingString("test.archive")
+        let archive = documentsPath + "test.archive"
         
         NSKeyedArchiver.archiveRootObject(feed, toFile: archive)
         
-        var feed2 = NSKeyedUnarchiver.unarchiveObjectWithFile(archive) as RSSFeed
+        var feed2 = NSKeyedUnarchiver.unarchiveObject(withFile: archive) as! RSSFeed
 
         XCTAssert(feed.title == feed2.title, "")
         XCTAssert(feed.link == feed2.link, "")
