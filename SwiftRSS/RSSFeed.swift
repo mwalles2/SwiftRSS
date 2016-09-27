@@ -15,7 +15,7 @@ class RSSFeed: NSObject, NSCoding {
     var title: String?
     var link: URL?
     
-    func setLink(_ linkString: String!)
+    func updateLink(_ linkString: String)
     {
         link = URL(string: linkString)
     }
@@ -56,38 +56,38 @@ class RSSFeed: NSObject, NSCoding {
     
     func encode(with aCoder: NSCoder)
     {
-        if let title = self.title?
+        if let title = self.title
         {
             aCoder.encode(title, forKey: "title")
         }
         
-        if let link = self.link?
+        if let link = self.link
         {
             aCoder.encode(link, forKey: "link")
         }
         
-        if let feedDescription = self.feedDescription?
+        if let feedDescription = self.feedDescription
         {
             aCoder.encode(feedDescription, forKey: "description")
         }
         
-        if let language = self.language?
+        if let language = self.language
         {
             aCoder.encode(language, forKey: "language")
         }
         
-        if let lastBuildDate = self.lastBuildDate?
+        if let lastBuildDate = self.lastBuildDate
         {
             aCoder.encode(lastBuildDate, forKey: "lastBuildDate")
         }
         
-        if let generator = self.generator?
+        if let generator = self.generator
         {
             aCoder.encode(generator, forKey: "generator")
         }
         
         
-        if let copyright = self.copyright?
+        if let copyright = self.copyright
         {
             aCoder.encode(copyright, forKey: "copyright")
         }

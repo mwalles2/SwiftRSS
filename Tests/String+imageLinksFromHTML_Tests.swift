@@ -28,10 +28,13 @@ class String_ImageLinksFromHTML_Tests: XCTestCase {
         let links = mock.imageLinksFromHTMLString
         
         XCTAssertTrue(links.count == 4, "")
-        XCTAssertTrue(links[0].absoluteString == "http://apple.com/iphone.png", "")
-        XCTAssertTrue(links[1].absoluteString == "http://apple.com/ipad.jpg", "")
-        XCTAssertTrue(links[2].absoluteString == "https://google.com/android.gif", "")
-        XCTAssertTrue(links[3].absoluteString == "http://microsoft.com/lumia.jpeg", "")
+		
+		if(links.count == 4) {
+			XCTAssertTrue(links[0].absoluteString == "http://apple.com/iphone.png", "")
+			XCTAssertTrue(links[1].absoluteString == "http://apple.com/ipad.jpg", "")
+			XCTAssertTrue(links[2].absoluteString == "https://google.com/android.gif", "")
+			XCTAssertTrue(links[3].absoluteString == "http://microsoft.com/lumia.jpeg", "")
+		}
     }
 
     func test_imagesLinksFromHTMLString_withRealMock_shouldReturnValidArrayOfURLs()
@@ -41,7 +44,10 @@ class String_ImageLinksFromHTML_Tests: XCTestCase {
         let links = mock.imageLinksFromHTMLString
         
         XCTAssert(links.count == 1, "")
-        XCTAssert(links[0].absoluteString == "http://33.media.tumblr.com/fc576f290358def5f021b7a99032aa0c/tumblr_nc05ipn7h61qjk2rvo1_500.jpg", "")
-        
+		
+		if (links.count == 1) {
+			XCTAssert(links[0].absoluteString == "http://33.media.tumblr.com/fc576f290358def5f021b7a99032aa0c/tumblr_nc05ipn7h61qjk2rvo1_500.jpg", "")
+		}
+		
     }
 }

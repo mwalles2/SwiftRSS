@@ -28,15 +28,15 @@ class MasterViewController: UITableViewController {
 
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
+            self.detailViewController = controllers[controllers.count-1].inputViewController as? DetailViewController
         }
         
         let request = URLRequest(url: URL(string: "http://developer.apple.com/swift/blog/news.rss")!)
         
         RSSParser.parseFeedForRequest(request, callback: { (feed, error) -> Void in
-            if let myFeed = feed?
+            if let myFeed = feed
             {
-                if let title = myFeed.title?
+                if let title = myFeed.title
                 {
                     self.title = title
                 }
@@ -58,7 +58,7 @@ class MasterViewController: UITableViewController {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 
-                if let feed = self.feed?
+                if let feed = self.feed
                 {
                     let item = feed.items[indexPath.row] as RSSItem
                     let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
@@ -78,7 +78,7 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let feed = self.feed?
+        if let feed = self.feed
         {
             return feed.items.count
         }
@@ -89,7 +89,7 @@ class MasterViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as UITableViewCell
 
-        if let feed = self.feed?
+        if let feed = self.feed
         {
             let item = feed.items[(indexPath as NSIndexPath).row] as RSSItem
             

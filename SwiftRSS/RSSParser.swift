@@ -69,7 +69,7 @@ class RSSParser: NSObject, XMLParserDelegate {
     
     func parserDidEndDocument(_ parser: XMLParser)
     {
-        if let closure = self.callbackClosure?
+        if let closure = self.callbackClosure
         {
             closure(self.feed, nil)
         }
@@ -90,7 +90,7 @@ class RSSParser: NSObject, XMLParserDelegate {
         
         if elementName == node_item
         {
-            if let item = self.currentItem?
+            if let item = self.currentItem
             {
                 self.feed.items.append(item)
             }
@@ -99,7 +99,8 @@ class RSSParser: NSObject, XMLParserDelegate {
             return
         }
         
-        if let item = self.currentItem?
+        // FIXME: should be changed to an ENUM with a switch
+        if let item = self.currentItem
         {
             if elementName == node_title
             {
@@ -108,7 +109,7 @@ class RSSParser: NSObject, XMLParserDelegate {
             
             if elementName == node_link
             {
-                item.setLink(self.currentElement)
+                item.updateLink(self.currentElement)
             }
             
             if elementName == node_guid
@@ -118,7 +119,7 @@ class RSSParser: NSObject, XMLParserDelegate {
             
             if elementName == node_publicationDate
             {
-                item.setPubDate(self.currentElement)
+                item.updatePubDate(self.currentElement)
             }
             
             if elementName == node_description
@@ -133,17 +134,17 @@ class RSSParser: NSObject, XMLParserDelegate {
             
             if elementName == node_commentsLink
             {
-                item.setCommentsLink(self.currentElement)
+                item.updateCommentsLink(self.currentElement)
             }
             
-            if elementName == node_commentsCount
+            if elementName == node_commentsCount, let commentCount = Int(self.currentElement)
             {
-                item.commentsCount = self.currentElement.toInt()
+                item.commentsCount = commentCount
             }
             
             if elementName == node_commentRSSLink
             {
-                item.setCommentRSSLink(self.currentElement)
+                item.updateCommentRSSLink(self.currentElement)
             }
             
             if elementName == node_author
@@ -166,7 +167,7 @@ class RSSParser: NSObject, XMLParserDelegate {
             
             if elementName == node_link
             {
-                feed.setLink(self.currentElement)
+                feed.updateLink(self.currentElement)
             }
             
             if elementName == node_description
@@ -202,7 +203,7 @@ class RSSParser: NSObject, XMLParserDelegate {
     
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         
-        if let closure = self.callbackClosure?
+        if let closure = self.callbackClosure
         {
             closure(nil, parseError as NSError?)
         }

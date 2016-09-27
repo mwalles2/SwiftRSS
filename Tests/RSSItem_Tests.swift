@@ -23,10 +23,10 @@ class RSSItem_Tests: XCTestCase {
     
     func test_setLink_withAValidURLString_shouldCreateAValidURL()
     {
-        var item: RSSItem = RSSItem()
-        item.setLink("http://www.apple.com")
+        let item: RSSItem = RSSItem()
+        item.updateLink("http://www.apple.com")
         
-        if let link = item.link?
+        if let link = item.link
         {
             XCTAssert(true, "link is valid")
         }
@@ -39,16 +39,16 @@ class RSSItem_Tests: XCTestCase {
     
     func test_archivingAndUnarchiving_withValidObject_shouldReturnValidObjectWithSameValues()
     {
-        var item: RSSItem = RSSItem()
+        let item: RSSItem = RSSItem()
         
         item.title = "Hello"
-        item.setLink("http://www.apple.com")
+        item.updateLink("http://www.apple.com")
         item.guid = "1234"
         item.pubDate = Date()
         item.itemDescription = "Big Description"
         item.content = "Here is the content"
-        item.setCommentsLink("http://www.test.com")
-        item.setCommentRSSLink("http://www.whatever.com/")
+        item.updateCommentsLink("http://www.test.com")
+        item.updateCommentRSSLink("http://www.whatever.com/")
         item.commentsCount = 666
         item.author = "John Doe"
         item.categories = ["One","Two","Tree"]
@@ -57,7 +57,7 @@ class RSSItem_Tests: XCTestCase {
         
         NSKeyedArchiver.archiveRootObject(item, toFile: archive)
         
-        var item2 = NSKeyedUnarchiver.unarchiveObject(withFile: archive) as! RSSItem
+        let item2 = NSKeyedUnarchiver.unarchiveObject(withFile: archive) as! RSSItem
         
         XCTAssert(item.title == item2.title, "")
         XCTAssert(item.link == item2.link, "")
@@ -67,7 +67,7 @@ class RSSItem_Tests: XCTestCase {
         XCTAssert(item.content == item2.content, "")
         XCTAssert(item.commentsLink!.absoluteString == item2.commentsLink!.absoluteString, "")
         XCTAssert(item.commentRSSLink!.absoluteString == item2.commentRSSLink!.absoluteString, "")
-        XCTAssert(item.commentsCount == item2.commentsCount, "")
+		XCTAssertEqual(item.commentsCount, item2.commentsCount)
         XCTAssert(item.author == item2.author, "")
         XCTAssert(item.categories[0] == item2.categories[0], "")
         XCTAssert(item.categories[1] == item2.categories[1], "")

@@ -12,22 +12,27 @@ extension String {
     var imageLinksFromHTMLString: [URL]
     {
         var matches = [URL]()
-        
-        var error: NSError?
-        
-        var full_range: NSRange = NSMakeRange(0, countElements(self))
-        
-        if let regex = NSRegularExpression(pattern:"(https?)\\S*(png|jpg|jpeg|gif)", options:.CaseInsensitive, error:&error)
-        {
-            regex.enumerateMatchesInString(self, options: NSRegularExpression.MatchingOptions(0), range: full_range) {
-                (result : NSTextCheckingResult!, _, _) in
+
+        let fullRange: NSRange = NSMakeRange(0, self.characters.count)
+        do {
+            let regex = try NSRegularExpression(pattern: "(https?)\\S*(png|jpg|jpeg|gif)", options: .caseInsensitive)
+            regex.enumerateMatches(in: self, options: [], range: fullRange) {
+                (result : NSTextCheckingResult?, _, _) in
                 
+                guard let range = result?.range else {
+                    return
+                }
+
                 // didn't find a way to bridge an NSRange to Range<String.Index>
                 // bridging String to NSString instead
-                var str = (self as NSString).substringWithRange(result.range) as String
+                let str = (self as NSString).substring(with: range) as String
                 
-                matches.append(NSURL(string: str)!)
+                if let url = NSURL(string: str) as? URL {
+                    matches.append(url)
+                }
             }
+        } catch {
+            
         }
         
         return matches
